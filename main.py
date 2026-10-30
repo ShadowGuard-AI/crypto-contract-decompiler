@@ -97,6 +97,10 @@ def main():
 
     except Exception as e:
         logging.exception(f"An error occurred during analysis: {e}")
+        # A report that could not be written (bad output directory is the
+        # usual cause) is a failed run. Returning normally here made
+        # scripts see exit 0 with no report on disk.
+        sys.exit(1)
 
 
 if __name__ == "__main__":
