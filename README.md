@@ -1,3 +1,5 @@
+![Banner](banner.png)
+
 # crypto-contract-decompiler
 Decompiles compiled smart contract bytecode (e.g., EVM bytecode) into a more human-readable format, aiding in vulnerability analysis and auditing. Relies on existing EVM disassemblers and decompilers. - Focused on Basic cryptographic operations
 
