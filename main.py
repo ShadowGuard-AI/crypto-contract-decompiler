@@ -1,15 +1,7 @@
 import argparse
 import logging
 import os
-import hashlib
-from cryptography.hazmat.primitives import hashes
-from cryptography.hazmat.primitives.asymmetric import rsa, ec
-from cryptography.hazmat.primitives import serialization
-from cryptography.hazmat.primitives.kdf.hkdf import HKDF
-from cryptography.hazmat.backends import default_backend
-from cryptography.exceptions import InvalidSignature
-import secrets
-import binascii
+import sys
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -56,7 +48,10 @@ def analyze_cryptographic_operations(bytecode):
     report = f"Analysis of bytecode:\n{bytecode}\n\n"
     report += "--- Potential Cryptographic Operations Detected (Placeholder) ---\n"
 
-    # Placeholder detection - looking for specific strings (VERY basic)
+    # This is a text search, not a decompilation: the input is scanned for
+    # operation names written out in it. Real hex bytecode holds opcodes,
+    # not these words, so a compiled contract with no readable names in it
+    # reports nothing here even if it uses all four operations.
     if "keccak256" in bytecode.lower():
       report += "Potential Keccak256 (SHA-3) usage detected.\n"
     if "sha256" in bytecode.lower():
@@ -83,13 +78,13 @@ def main():
     # Input validation
     if not os.path.isfile(args.bytecode_file):
         logging.error(f"Error: Bytecode file not found: {args.bytecode_file}")
-        return
+        sys.exit(1)
 
     bytecode = safe_file_read(args.bytecode_file)
 
     if bytecode is None:
         logging.error("Failed to read bytecode.  Exiting.")
-        return
+        sys.exit(1)
 
 
     try:
