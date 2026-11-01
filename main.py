@@ -45,6 +45,9 @@ def analyze_cryptographic_operations(bytecode):
     analyze the output for crypto-related instructions/patterns.
     """
 
+    # I copy the entire input into the report. For a large contract
+    # the report is mostly the input itself, and anyone sharing the
+    # report is sharing the bytecode with it.
     report = f"Analysis of bytecode:\n{bytecode}\n\n"
     report += "--- Potential Cryptographic Operations Detected (Placeholder) ---\n"
 
@@ -52,6 +55,9 @@ def analyze_cryptographic_operations(bytecode):
     # operation names written out in it. Real hex bytecode holds opcodes,
     # not these words, so a compiled contract with no readable names in it
     # reports nothing here even if it uses all four operations.
+    # I lower the whole input for each of the four checks. That
+    # repeats a full copy of a large file four times, which is
+    # the price of keeping each check a single readable line.
     if "keccak256" in bytecode.lower():
       report += "Potential Keccak256 (SHA-3) usage detected.\n"
     if "sha256" in bytecode.lower():
@@ -90,6 +96,9 @@ def main():
     try:
         analysis_report = analyze_cryptographic_operations(bytecode)
 
+        # The default output path is output.txt in the caller's
+        # directory. Running this twice from the same place replaces
+        # the first report without any warning.
         with open(args.output_file, "w") as outfile:
             outfile.write(analysis_report)
 
