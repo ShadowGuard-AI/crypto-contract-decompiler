@@ -8,15 +8,16 @@ decompile anything, and it uses no external decompiler; the report
 itself labels this a placeholder analysis. A missing input file exits 1.
 
 ## Install
-`git clone https://github.com/ShadowStrikeHQ/crypto-contract-decompiler`
+`git clone https://github.com/ShadowGuard-AI/crypto-contract-decompiler`
 
 ## Usage
-`./crypto-contract-decompiler [params]`
+`python3 main.py BYTECODE_FILE`
 
 ## Parameters
+- `BYTECODE_FILE`: Path to the bytecode file of the smart contract.
 - `-h`: Show help message and exit
-- `--output_file`: Path to save the decompiled/analyzed output.
+- `--output_file`, `-o`: Path to save the decompiled/analyzed output. Default: `output.txt`.
 - `--debug`: Enable debug logging.
 
 ## License
-Copyright (c) ShadowStrikeHQ
+Licensed under the terms in LICENSE.
